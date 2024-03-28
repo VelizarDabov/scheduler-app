@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button";
+import { SignIn, SignUp, SignUpButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const Header = () => {
@@ -19,10 +21,28 @@ const Header = () => {
           <li className="hover:text-primary transition-all duration-300 cursor-pointer">Contact us</li>
           <li className="hover:text-primary transition-all duration-300 cursor-pointer">About us</li>
         </ul>
-        <div className="flex gap-5">
+        {/* <div className="flex gap-5">
+      <SignIn>
       <Button variant="ghost">Login</Button>
+        </SignIn>
+     
+      <SignUp>
+Sign up
+      </SignUp>
       <Button>Get Started</Button>
-      </div>
+      </div> */}
+      <div className="flex w-32 justify-end gap-3">
+          <SignedIn>
+            <UserButton afterSignOutUrl="/"  />
+          </SignedIn>
+          <SignedOut>
+            <Button asChild className="rounded-full" size="lg">
+              <Link href="/sign-in">
+                Login
+              </Link>
+            </Button>
+          </SignedOut>
+        </div>
       </div>
      
     

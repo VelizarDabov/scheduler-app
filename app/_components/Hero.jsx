@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -31,11 +32,12 @@ const Hero = () => {
         <hr className="mt-3"></hr>
         <h2 className="mt-3">
           {" "}
-          <Link href="" className="text-primary">
+          <Link href="https://famous-crayfish-84.accounts.dev/sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fsign-in" className="text-primary">
             Sign up Free with Email.
           </Link>{' '}
           No Credit card required
         </h2>
+  
       </div>
     </div>
   );
