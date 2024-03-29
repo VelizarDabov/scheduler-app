@@ -39,7 +39,6 @@ if(loading){
     return (
         <div>
             Dashboard
-            <UserButton />
         </div>
     );
 };
