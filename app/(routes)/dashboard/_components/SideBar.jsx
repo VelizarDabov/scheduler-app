@@ -6,7 +6,7 @@ import menu from "../_constants";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { average } from "firebase/firestore";
+
 const SideBar = () => {
     const path =usePathname();
     const [activePath, setActivePath] = useState(path);
@@ -20,10 +20,12 @@ setActivePath(path)
       <div className="flex justify-center">
         <Image src="/logo.svg" width={150} height={150} alt="logo" />
       </div>
-
-      <Button className="flex gap-2 w-full rounded-full">
+<Link href={'/create-meeting'}>
+<Button className="flex gap-2 w-full rounded-full">
         <Plus /> Create
       </Button>
+</Link>
+      
 
       <div className="mt-5 flex flex-col gap-5">
         {menu.map((item) => (
