@@ -6,6 +6,7 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
   getDocs,
   getFirestore,
   orderBy,
@@ -27,9 +28,10 @@ const MeetingEventList = () => {
   const db = getFirestore(app);
   const { user } = useUser();
   const [eventList, setEventList] = useState([]);
-
+  const [businessInfo, setBusinessInfo] = useState([]);
   useEffect(() => {
     user && getEventList();
+    user && BusinessInfo();
   }, [user]);
   const getEventList = async () => {
     setEventList([]);
@@ -42,6 +44,15 @@ const MeetingEventList = () => {
     querySnapshot.forEach((doc) => {
       setEventList((prev) => [...prev, doc.data()]);
     });
+  };
+  const onCopyClickHandler = (event) => {
+    const meeting =
+      process.env.NEXT_PUBLIC_BASE_URL +
+      businessInfo.businessName +
+      "/" +
+      event.id;
+    navigator.clipboard.writeText(meeting);
+    toast("Copied to Clipboard");
   };
   const onDeleteEvent = async (event) => {
     if (!event || !event.id) {
@@ -57,6 +68,11 @@ const MeetingEventList = () => {
       console.error("Error deleting event:", error);
       // Handle the error appropriately, e.g., show an error message
     }
+  };
+  const BusinessInfo = async () => {
+    const docRef = doc(db, "Business", user?.primaryEmailAddress.emailAddress);
+    const docSnap = await getDoc(docRef);
+    setBusinessInfo(docSnap.data());
   };
   return (
     <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
@@ -104,8 +120,7 @@ const MeetingEventList = () => {
               <h2
                 className="flex items-center text-primary gap-2  text-sm cursor-pointer "
                 onClick={() => {
-                  navigator.clipboard.writeText(event.locationUrl);
-                  toast("Copied to Clickboard");
+                  onCopyClickHandler(event);
                 }}
               >
                 <Copy className="h-4 w-4 " /> Copy Link
