@@ -13,24 +13,47 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import ThemeOptions from "../_utils/ThemeOptions";
+import { doc, getFirestore, setDoc } from "firebase/firestore";
+import { app } from "@/config/Firebase";
+import { useUser } from "@clerk/nextjs";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
-const MeetingForm = ({setFormValue}) => {
+const MeetingForm = ({ setFormValue }) => {
   const [themeColor, setThemeColor] = useState();
   const [eventName, setEventName] = useState();
   const [duration, setDuration] = useState(30);
   const [locationType, setLocationType] = useState();
   const [locationUrl, setLocationUrl] = useState();
- 
-
+  const { user } = useUser();
+const router=useRouter()
+  const db = getFirestore(app);
   useEffect(() => {
     setFormValue({
-        eventName:eventName,
-        duration:duration,
-        locationType:locationType,
-        locationUrl:locationUrl,
-        themeColor:themeColor,
-    })
-  }, [eventName, duration, locationType, locationUrl]);
+      eventName: eventName,
+      duration: duration,
+      locationType: locationType,
+      locationUrl: locationUrl,
+      themeColor: themeColor,
+    });
+  }, [eventName, duration, locationType, locationUrl, themeColor]);
+
+  const onCreateClick = async () => {
+    const id = Date.now().toString();
+    await setDoc(doc(db, "MeetingEvent", id), {
+      id: id,
+      eventName: eventName,
+      duration: duration,
+      locationType: locationType,
+      locationUrl: locationUrl,
+      themeColor: themeColor,
+      businessid: doc(db, "Business", user?.primaryEmailAddress.emailAddress),
+      createdBy:user?.primaryEmailAddress.emailAddress,
+    }).then((resp) => {
+      toast("New Meeting Event Created!");
+      router.replace('/dashboard/meeting-type')
+    });
+  };
   return (
     <div className="p-8">
       <Link href={"/dashboard"}>
@@ -123,6 +146,7 @@ const MeetingForm = ({setFormValue}) => {
       <Button
         disabled={!eventName || !duration || !locationType || !locationUrl}
         className="w-full  mt-9"
+        onClick={() => onCreateClick()}
       >
         Create
       </Button>

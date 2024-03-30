@@ -1,4 +1,5 @@
 'use client'
+import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { format, formatDate } from 'date-fns'
 import { Clock, MapPin } from 'lucide-react'
@@ -8,7 +9,7 @@ import React, { useEffect, useState } from 'react'
 
 const PreviewMeeting = ({formData}) => {
     const [date, setDate]=useState(new Date());
-
+const [timeSlots, setTimeSlots] = useState()
     useEffect(() => {
         formData?.duration&&createTimeSlot(formData?.duration)
     },[formData])
@@ -26,10 +27,10 @@ const PreviewMeeting = ({formData}) => {
             const period=hours >= 12 ? 'PM': 'AM'
             return `${String(formattedHours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${period}`
         })
-  console.log(slots)
+  setTimeSlots(slots)
     }
   return (
-    <div className='p-5 py-10 shadow-lg m-5 border-t-8'>
+    <div className='p-5 py-10 shadow-lg m-5 border-t-8' style={{borderTopColor:formData?.themeColor}}>
        <Image src='/logo.svg' width={150} height={150} alt='logo'/>
        <div className='grid grid-cols-1 md:grid-cols-3 mt-5'>
         {/* Meeting info */}
@@ -52,11 +53,17 @@ const PreviewMeeting = ({formData}) => {
      selected={date}
      onSelect={setDate}
      className="rounded-md border mt-5"
+     disabled={(date)=> date <= new Date()}
    />
  
        </div>
-  
+
         </div>
+        <div className='flex flex-col w-full overflow-auto gap-4 p-5' style={{maxHeight:'400px'}}>
+  {timeSlots?.map((slot, index)=> (
+    <Button className='border-primary text-primary' variant='outline' key={index}>{slot}</Button>
+ ))}
+  </div>
        </div>
     </div>
   )
