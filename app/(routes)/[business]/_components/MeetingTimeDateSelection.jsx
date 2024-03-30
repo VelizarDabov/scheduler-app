@@ -2,17 +2,20 @@
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { format, formatDate } from "date-fns";
-import { CalendarCheck, Clock, MapPin, TimerIcon } from "lucide-react";
+import { CalendarCheck, Clock, LoaderIcon, MapPin, TimerIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import TimeDateSelection from "./TimeDateSelection";
+import UserFormInfo from "./UserFormInfo";
 
 const MeetingTimeDateSelection = ({ eventInfo, businessInfo }) => {
   const [date, setDate] = useState(new Date());
   const [timeSlots, setTimeSlots] = useState();
   const [enableTimesSlot, setEnableTimesSlot] = useState(false);
   const [selectedTime, setSelectedTime] = useState();
+  const [step, setStep] = useState(1);
+  const [loading,setLoading]=useState(false);
   useEffect(() => {
     eventInfo?.duration && createTimeSlot(eventInfo?.duration);
   }, [eventInfo]);
@@ -84,15 +87,33 @@ const MeetingTimeDateSelection = ({ eventInfo, businessInfo }) => {
           </div>
         </div>
         {/* time and date selection */}
-        <TimeDateSelection
-          date={date}
-          enableTimesSlot={enableTimesSlot}
-          handleDateChange={handleDateChange}
-          setSelectedTime={setSelectedTime}
-          selectTime={selectedTime}
-          timeSlots={timeSlots}
-        />
+        {step == 1 ? (
+          <TimeDateSelection
+            date={date}
+            enableTimesSlot={enableTimesSlot}
+            handleDateChange={handleDateChange}
+            setSelectedTime={setSelectedTime}
+            selectTime={selectedTime}
+            timeSlots={timeSlots}
+          />
+        ) : (
+          <UserFormInfo />
+        )}
       </div>
+      <div className='flex gap-3 justify-end'>
+        {step==2&&<Button variant="outline" 
+        onClick={()=>setStep(1)}>Back</Button>}
+      {step==1? <Button className="mt-10 float-right"
+        disabled={!selectedTime||!date}
+        onClick={()=>setStep(step+1)}
+       >Next
+       </Button>:
+       <Button  
+      
+       > 
+       {loading?<LoaderIcon className='animate-spin'/>:'Schedule' }
+      </Button>}
+       </div>
     </div>
   );
 };
