@@ -1,11 +1,10 @@
 "use client";
-import React, { useDebugValue, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import DaysList from "../../create-meeting/_utils/DaysList";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
-  collection,
   doc,
   getDoc,
   getFirestore,

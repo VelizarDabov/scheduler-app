@@ -1,7 +1,6 @@
 'use client'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
-import { format, formatDate } from 'date-fns'
 import { Clock, MapPin } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
