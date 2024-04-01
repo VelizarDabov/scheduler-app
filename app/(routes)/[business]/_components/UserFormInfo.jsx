@@ -18,7 +18,7 @@ const UserFormInfo = ({setUserEmail,setUserName,setUserNote}) => {
         <Input onChange={(e) => setUserNote(e.target.value)} />
       </div>
       <div>
-        <h2 className="text-xs text-gray-400">
+        <h2 className="text-xs text-gray-500">
           By Proceeding, you confirm that you read and agree VND terms and
           conditions
         </h2>

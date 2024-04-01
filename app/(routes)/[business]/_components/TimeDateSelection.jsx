@@ -2,10 +2,7 @@ import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import React from 'react'
 
-function TimeDateSelection({date,handleDateChange,timeSlots,setSelectedTime,enableTimeSlot,selectedTime,prevBooking}) {
-
-
- 
+const TimeDateSelection=({date,handleDateChange,timeSlots,setSelectedTime,enableTimeSlot,selectedTime,prevBooking})=> { 
   const checkTimeSlot=(time)=>{
     return (prevBooking.filter(item=>item.selectedTime==time)).length>0;
   }
