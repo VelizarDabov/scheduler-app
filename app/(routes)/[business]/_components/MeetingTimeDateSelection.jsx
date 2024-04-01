@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { CalendarCheck, Clock, LoaderIcon, MapPin, Timer } from "lucide-react";
 import Image from "next/image";
@@ -8,7 +7,6 @@ import React, { useEffect, useState } from "react";
 import TimeDateSelection from "./TimeDateSelection";
 import UserFormInfo from "./UserFormInfo";
 import {
-  QuerySnapshot,
   collection,
   doc,
   getDocs,
