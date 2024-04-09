@@ -16,10 +16,13 @@ const Header = () => {
           className="w-[150px] md:w-[200px]"
         />
         <ul className=" hidden md:flex gap-14 font-medium text-lg ">
-          <li className="hover:text-primary transition-all duration-300 cursor-pointer" >Product</li>
+          <a href="/dashboard">
+          <li className="hover:text-primary transition-all duration-300 cursor-pointer" >Dashboard</li>
+          </a>
+       
           <li className="hover:text-primary transition-all duration-300 cursor-pointer">Pricing</li>
-          <li className="hover:text-primary transition-all duration-300 cursor-pointer">Contact us</li>
-          <li className="hover:text-primary transition-all duration-300 cursor-pointer">About us</li>
+          {/* <li className="hover:text-primary transition-all duration-300 cursor-pointer">Contact us</li>
+          <li className="hover:text-primary transition-all duration-300 cursor-pointer">About us</li> */}
         </ul>
       <div className="flex w-32 justify-end gap-3">
           <SignedIn>
