@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { app } from "@/config/Firebase";
 import { useUser } from "@clerk/nextjs";
